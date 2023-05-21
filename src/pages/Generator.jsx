@@ -20,7 +20,8 @@ export default function Generator() {
             data: data
         }).then((res) => {
             if (res.status == 200) {
-                setRes(JSON.stringify(res.data['data']))
+                var result = (res.data['data']).replace(/(\r\n|\n|\r)/gm, "");
+                setRes(JSON.stringify(result, null, 2))
                 setSpinner(false)
             } else {
                 alert("Internal server error")
@@ -50,12 +51,12 @@ export default function Generator() {
             </div>
 
             <div className="container color3">
-                <br/>
-                <div className="row">
-                    <div className="column">
-                        <button className="button" onClick={() => { navigator.clipboard.writeText(res); alert("copied to clipboard") }}>copy</button>
+                <br />
+                <div className="box">
+                    <div className="one">
+                        <button className="button float-left" onClick={() => { navigator.clipboard.writeText(res); alert("copied to clipboard") }}>copy</button>
                     </div>
-                    <div className="column"> <button className="button float-right" onClick={handleDownload}>DOWNLOAD</button>
+                    <div className="two">  <button className="button float-right" onClick={handleDownload}>DOWNLOAD</button>
                     </div>
                 </div>              <blockquote><p>{res}</p></blockquote>
                 {spinner == true ? <Bars
@@ -74,11 +75,11 @@ export default function Generator() {
                     <div className="column">
                         <div className="container color3">
                             <br />
-                            <div className="row">
-                                <div className="column">
+                            <div className="box">
+                                <div className="one">
                                     <button className="button" onClick={generate}>generate</button>
                                 </div>
-                                <div className="column">
+                                <div className="two">
                                     <center>  <label>Enter some Text</label></center>
                                 </div>
                             </div>

@@ -16,7 +16,8 @@ export default function Summarize() {
             data: data
         }).then((res) => {
             if (res.status == 200) {
-                setRes(JSON.stringify(res.data['data']))
+                var result = (res.data['data']).replace(/(\r\n|\n|\r)/gm, "");
+                setRes(JSON.stringify(result))
                 setSpinner(false)
                 //alert(res.data['data'])
             } else {
@@ -68,12 +69,9 @@ export default function Summarize() {
 
             <div className="container color3">
                 <br />
-                <div className="row">
-                    <div className="column">
-                        <button className="button" onClick={() => { navigator.clipboard.writeText(res); alert("copied to clipboard") }}>copy</button>
-                    </div>
-                    <div className="column"> <button className="button float-right" onClick={handleDownload}>DOWNLOAD</button>
-                    </div>
+                <div className="box">
+                    <div className="one">  <button className="button float-left" onClick={() => { navigator.clipboard.writeText(res); alert("copied to clipboard") }}>copy</button></div>
+                    <div className="two"><button className="button float-right" onClick={handleDownload}>DOWNLOAD</button></div>
                 </div>
                 <blockquote><p>{res}</p></blockquote>
 
@@ -92,19 +90,18 @@ export default function Summarize() {
                 <div className="column">
                     <div className="container color3">
                         <br />
-                        <div className="row">
-                            <div className="column">
+                        <div className="box">
+                            <div className="one">
                                 <button className="button" onClick={handleSummarize}>Summarize</button>
                             </div>
-                            <div className="column">
-                                <center> <label>Enter some Text</label></center>
-                            </div>
-                            <div className="column">
+                            
+                          
+                            <div className="two">
                                 <button className="button float-right" onClick={handleParaphrase}>Paraphrase</button>
                             </div>
                         </div>
 
-
+                        <center> <label>Enter some Text</label></center>
                         <textarea className="textarea3" placeholder="Write some text" onChange={handleData}></textarea>
                     </div>
                 </div>
